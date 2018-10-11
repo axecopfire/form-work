@@ -8,7 +8,17 @@
     $username = $sent["username"];
     $password = $sent["password"];
 
-    $connection = mysqli_connect('localhost', 'root', 'root', 'mydatabase');
+    $username = mysqli_real_escape_string($connection, $username);
+    $password = mysqli_real_escape_string($connection, $password);
+
+    $hashFormat = "$2y$10$";
+    $salt = "iusesomecrazystrings22";
+
+    $hashF_and_salt = $hashFormat . $salt;
+    $password = crypt($password,$hashF_and_salt);
+
+
+    // $connection = mysqli_connect('localhost', 'root', 'root', 'mydatabase');
 
     if($connection) {
       echo "Connected to Database:<br>";
@@ -74,5 +84,7 @@
       die("QUERY FAILED: " . mysqli_error($connection));
     }
   }
+
+
 
 ?>
